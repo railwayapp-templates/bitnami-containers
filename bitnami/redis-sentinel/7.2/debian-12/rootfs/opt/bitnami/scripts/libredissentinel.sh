@@ -201,6 +201,11 @@ is_redis_sentinel_not_running() {
 redis_initialize() {
     info "Initializing Redis Sentinel..."
 
+    # Create necessary directories if they don't exist
+    mkdir -p "${REDIS_SENTINEL_VOLUME_DIR}/conf"
+    mkdir -p "${REDIS_SENTINEL_LOG_DIR}"
+    mkdir -p "${REDIS_SENTINEL_TMP_DIR}"
+
     # Give the daemon user appropriate permissions
     if am_i_root; then
         for dir in "$REDIS_SENTINEL_CONF_DIR" "$REDIS_SENTINEL_LOG_DIR" "$REDIS_SENTINEL_TMP_DIR" "$REDIS_SENTINEL_VOLUME_DIR"; do
